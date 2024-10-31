@@ -1,6 +1,7 @@
 <?php
 
 use App\DataTables\UsersDataTable;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -40,9 +41,6 @@ Route::get('/image', function () {
     
 });
 
-// Route::post('/upload', function (Request $request) {
-//     $image = Image::read($request->file('image'));
-// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,3 +49,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+
+Route::get('shop', [CartController::class, 'shop'])->name('shop');
+
+Route::get('cart', [CartController::class,'cart'])->name('cart');
+Route::get('add-to-cart/{id}', [CartController::class,'addToCart'])->name('add-to-cart');
+Route::get('qty-increment/{rowId}', [CartController::class, 'qtyIncrement'])->name('qty-increment');
+Route::get('qty-decrement/{rowId}', [CartController::class, 'qtyDecrement'])->name('qty-decrement');
+Route::get('remove-product/{rowId}', [CartController::class, 'removeProduct'])->name('remove-product');
